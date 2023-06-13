@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer & Stopwatch</title>
+  <link rel="audio" href="song.mp3">
+  <style>
+    body {
+      /* background-image: url('https://images.unsplash.com/photo-1501139083538-0139583c060f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGltZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80'); */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #ffcc00, #ff6600);
+  background-size: 100% 200%;
+  animation: gradientAnimation 3s linear infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+
+    }
+
+    .navbar a {
+      color: #fff;
+      margin-right: 10px;
+      text-decoration: none;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+
+.timer h1 {
+  margin-bottom: 20px;
+}
+
+.timer-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.timer-input label {
+  margin-right: 5px;
+}
+
+.timer-input input[type="number"] {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-buttons button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+.timer-buttons button:hover {
+  background-color: #555;
+}
+
+#timer-display {
+  font-size: 48px;
+  margin-top: 20px;
+}
+
+.audio-controls {
+  display: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.timer, .stopwatch {
+  display: none;
+  margin-top: 150px;
+  text-align: center;
+  color: #fff;
+}
+
+
+    .timer input[type="number"] {
+      padding: 5px;
+      font-size: 16px;
+    }
+.timer h1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+    .timer button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .timer button:hover {
+      background-color: #555;
+    }
+
+    .display {
+      font-size: 48px;
+      margin-top: 20px;
+    }
+
+    .stopwatch button {
+      margin-top: 10px;
+      width: 10%;
+      height: 40px;
+      border-radius: 7px;
+      
+    }
+    .stopwatch button:hover {
+      background-color: rgb(157, 156, 156);
+      
+    }
+    .audio-controls {
+      display: none;
+    }
+    .audio-controls audio::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+    .timer button {
+      display: flex;
+      justify-content: center;
+    }
+     /* Styles for the menu icon */
+     .menu-icon {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    /* Styles for the menu bar */
+    .menu-bar {
+      display: none;
+    }
+
+    .menu-items {
+      display: none;
+    }
+
+    .menu-bar.show .menu-items {
+      display: block;
+    }
+
+    /* Styles for the timer and stopwatch tabs */
+    .tabs {
+      display: flex;
+    }
+
+    .tabs a {
+      margin-right: 10px;
+    }
+    .navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-tab {
+  display: flex;
+  align-items: center;
+}
+
+.menu-tab {
+  display: flex;
+  align-items: center;
+}
+
+/* Rest of your CSS styles */
+
+/* CSS styles for the responsive menu */
+.menu-open .timer,
+.menu-open .stopwatch {
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="#" id="home-link">Home</a>
+    <div class="tabs" id="tabs">
+      <a href="#" id="timer-link">Timer</a>
+      <a href="#" id="stopwatch-link">Stopwatch</a>
+    </div>
+    <a href="#" id="menu-icon">&#9776;</a>
+  </div>
+  <div class="home" style="display: flex;align-items: center;float: right;justify-content: center;width: 500px;margin-top: 120px;margin-right: 100px;font-size: 25px;color: white;">
+    
+    
+    <h1>"The key is not to prioritize what's on your schedule, but to schedule your priorities."<br> - Stephen Covey</h1>
+  </div>
+  <div class="timer " style="display: none;">
+    <h1>Countdown Timer</h1>
+    <div class="timer-input">
+      <label for="timer-hours">Hours:</label>
+      <input type="number" id="timer-hours" min="0" max="23" value="0">
+      <label for="timer-minutes">Minutes:</label>
+      <input type="number" id="timer-minutes" min="0" max="59" value="0">
+      <label for="timer-seconds">Seconds:</label>
+      <input type="number" id="timer-seconds" min="0" max="59" value="0">
+    </div>
+    <div class="timer-buttons">
+      <button id="start-timer" style="display: flex;justify-content: center;align-items: center;background-color:  rgba(0, 0, 0, 0.7);border-radius: 4px;width: 120px;">Start</button>
+      <button id="stop-timer" style="display: none;">Stop</button>
+    </div>
+    <h2 id="timer-display">00:00:00</h2>
+    <div class="audio-controls">
+      <audio id="audio" src="song.mp3"></audio>
+    </div>
+  </div>
+
+  <div class="stopwatch" style="display: none;">
+    <h1 style="font-size: 50px;font-weight: 900;">Stopwatch</h1>
+    <button id="start-stopwatch">Start</button>
+    <button id="stop-stopwatch">Stop</button>
+    <button id="reset-stopwatch">Reset</button>
+    <h2 id="stopwatch-display"></h2>
+  </div>
+ 
+  <script>
+    // Countdown Timer
+   
+    let timer;
+let timerDisplay = document.getElementById('timer-display');
+let timerHoursInput = document.getElementById('timer-hours');
+let timerMinutesInput = document.getElementById('timer-minutes');
+let timerSecondsInput = document.getElementById('timer-seconds');
+let startTimerBtn = document.getElementById('start-timer');
+let stopTimerBtn = document.getElementById('stop-timer');
+let audio = document.getElementById('audio');
+
+startTimerBtn.addEventListener('click', function() {
+  let hours = parseInt(timerHoursInput.value) || 0;
+  let minutes = parseInt(timerMinutesInput.value) || 0;
+  let seconds = parseInt(timerSecondsInput.value) || 0;
+
+  let totalTime = (hours * 3600) + (minutes * 60) + seconds;
+
+  if (totalTime > 0) {
+    startTimer(totalTime);
+    audio.pause(); // Pause audio if it's playing
+    audio.currentTime = 0; // Reset audio to the beginning
+  }
+});
+
+stopTimerBtn.addEventListener('click', function() {
+  stopTimer();
+  audio.pause(); // Pause audio if it's playing
+});
+
+function startTimer(totalTime) {
+  let currentTime = totalTime;
+  let hours, minutes, seconds;
+
+  timer = setInterval(function() {
+    hours = Math.floor(currentTime / 3600);
+    minutes = Math.floor((currentTime % 3600) / 60);
+    seconds = currentTime % 60;
+
+    hours = String(hours).padStart(2, '0');
+    minutes = String(minutes).padStart(2, '0');
+    seconds = String(seconds).padStart(2, '0');
+
+    timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+
+    if (currentTime <= 0) {
+      clearInterval(timer);
+      timerDisplay.textContent = "Time's up!";
+      playSound();
+    }
+
+    currentTime--;
+  }, 1000);
+
+  startTimerBtn.style.display = 'none';
+  stopTimerBtn.style.display = 'inline-block';
+}
+
+function stopTimer() {
+  clearInterval(timer);
+  timerDisplay.textContent = '00:00:00';
+
+  startTimerBtn.style.display = 'inline-block';
+  stopTimerBtn.style.display = 'none';
+}
+
+function playSound() {
+  audio.play();
+}
+    // Stopwatch
+    let stopwatchDisplay = document.getElementById('stopwatch-display');
+    let startStopwatchBtn = document.getElementById('start-stopwatch');
+    let stopStopwatchBtn = document.getElementById('stop-stopwatch');
+    let resetStopwatchBtn = document.getElementById('reset-stopwatch');
+
+    let stopwatch;
+    let stopwatchStartTime;
+    let stopwatchRunning = false;
+
+    function updateStopwatchDisplay() {
+      let currentTime = Date.now() - stopwatchStartTime;
+      let seconds = Math.floor(currentTime / 1000);
+      let milliseconds = Math.floor((currentTime % 1000) / 10);
+      stopwatchDisplay.textContent = seconds + '.' + milliseconds.toString().padStart(2, '0');
+    }
+
+    startStopwatchBtn.addEventListener('click', function() {
+      if (!stopwatchRunning) {
+        stopwatchStartTime = Date.now();
+        stopwatch = setInterval(updateStopwatchDisplay, 1);
+        stopwatchRunning = true;
+      }
+    });
+
+    stopStopwatchBtn.addEventListener('click', function() {
+      if (stopwatchRunning) {
+        clearInterval(stopwatch);
+        stopwatchRunning = false;
+      }
+    });
+
+    resetStopwatchBtn.addEventListener('click', function() {
+      clearInterval(stopwatch);
+      stopwatchRunning = false;
+      stopwatchDisplay.textContent = '0.00';
+    });
+
+    // Navbar
+    let homeLink = document.getElementById('home-link');
+    let timerLink = document.getElementById('timer-link');
+    let stopwatchLink = document.getElementById('stopwatch-link');
+    let homeSection = document.querySelector('.home');
+    let timerSection = document.querySelector('.timer');
+    let stopwatchSection = document.querySelector('.stopwatch');
+
+    homeLink.addEventListener('click', function() {
+      homeSection.style.display = 'block';
+      timerSection.style.display = 'none';
+      stopwatchSection.style.display = 'none';
+    });
+
+    timerLink.addEventListener('click', function() {
+      homeSection.style.display = 'none';
+      timerSection.style.display = 'block';
+      stopwatchSection.style.display = 'none';
+    });
+
+    stopwatchLink.addEventListener('click', function() {
+      homeSection.style.display = 'none';
+      timerSection.style.display = 'none';
+      stopwatchSection.style.display = 'block';
+    });
+
+    // Optional: Hide other sections on page load
+    timerSection.style.display = 'none';
+    stopwatchSection.style.display = 'none';
+    
+    // Sound function to play audio
+    function playSound() {
+      audio.style.display = 'block';
+      audio.play();
+    }
+
+    // Function to stop sound
+    function stopSound() {
+      audio.style.display = 'none';
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    function toggleTabs() {
+  var tabs = document.getElementById('tabs');
+  var timer = document.getElementById('timer');
+  var stopwatch = document.getElementById('stopwatch');
+  var menuIcon = document.getElementById('menu-icon');
+
+  if (tabs.style.display === 'none') {
+    tabs.style.display = 'flex';
+    timer.style.display = 'block';
+    stopwatch.style.display = 'block';
+    menuIcon.classList.remove('active');
+  } else {
+    tabs.style.display = 'none';
+    timer.style.display = 'none';
+    stopwatch.style.display = 'none';
+    menuIcon.classList.add('active');
+  }
+}
+
+// Event listener for menu icon click
+var menuIcon = document.getElementById('menu-icon');
+menuIcon.addEventListener('click', toggleTabs);
+  </script>
+</body>
+</html>
